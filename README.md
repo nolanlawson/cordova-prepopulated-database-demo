@@ -103,46 +103,5 @@ copyDatabaseFile('mydatabase.db').then(function () {
 });
 ```
 
-Migrating from the original SQLite Plugin
------
-
-On iOS, the SQLite Plugin does not use the standard `Library/NoCloud`, but rather 
-`Library/LocalDatabase` ([source](https://github.com/litehelpers/Cordova-sqlite-storage/issues/430)).
-So you will need to migrate if you are upgrading existing apps to the SQLite Plugin 2.
-
-You can use similar code to copy a file from `Library/LocalDatabase` to `Library/NoCloud`:
-
-```js
-function migrateFromOriginalSQLitePlugin(dbName) {
-  if (/Android/.test(navigator.userAgent)) {
-    // no need to migrate on Android
-    return Promise.resolve();
-  }
-  var localDBDirName = cordova.file.dataDirectory.replace(/NoCloud\/$/, 'LocalDatabase/');
-  var sourceFileName = localDBDirName + dbName;
-  var targetDirName = cordova.file.dataDirectory;
-  return Promise.all([
-    new Promise(function (resolve, reject) {
-      resolveLocalFileSystemURL(sourceFileName, resolve, reject);
-    }),
-    new Promise(function (resolve, reject) {
-      resolveLocalFileSystemURL(targetDirName, resolve, reject);
-    })
-  ]).then(function (files) {
-    var sourceFile = files[0];
-    var targetDir = files[1];
-    return new Promise(function (resolve, reject) {
-      targetDir.getFile(dbName, {}, resolve, reject);
-    }).then(function () {
-      console.log("file already copied");
-    }).catch(function () {
-      console.log("file doesn't exist, copying it");
-      return new Promise(function (resolve, reject) {
-        sourceFile.copyTo(targetDir, dbName, resolve, reject);
-      }).then(function () {
-        console.log("database file copied");
-      });
-    });
-  });
-}
-```
+Within the "success" handler, just call `sqlitePlugin.openDatabase()` like you
+normally would, and the database will be ready.
