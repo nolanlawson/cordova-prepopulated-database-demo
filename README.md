@@ -2,7 +2,11 @@ Cordova prepopulated database demo
 =====
 
 Small app to demonstrate how to use prepopulated databases with
-[Cordova SQLite Plugin 2](https://travis-ci.org/nolanlawson/cordova-plugin-sqlite-2).
+[Cordova SQLite Plugin 2](https://github.com/nolanlawson/cordova-plugin-sqlite-2).
+
+It copies a database file from the read-only `www/` directory 
+into the local read-write data directory, then reads from the database to prove
+that it's working. If the database has already been copied, then it skips that step.
 
 Running this app
 ---
@@ -50,7 +54,7 @@ read-write. For more details, see the [Cordova file plugin](https://github.com/a
 Do it yourself
 ----
 
-If you want a simple copy-paste job, you can borrow my own code from this project.
+If you want a simple copy-paste job, you can borrow [my own code from this project](https://github.com/nolanlawson/cordova-prepopulated-database-demo/blob/3b71939697cbc6667769a04fe4fceae9a0898925/www/js/index.js#L46-L88).
 Note that you will need a `Promise` polyfill if you are targeting older versions of
 Android or iOS:
 
