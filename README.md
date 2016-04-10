@@ -32,6 +32,9 @@ What you'll see:
 
 <img src="screenshot.png" width="600" alt="screnshot of apps"/>
 
+If you close the app and run it a second time, you'll see it say that
+there was no need to copy the file.
+
 How it works
 ---
 
